@@ -1,1 +1,5 @@
 .DS_Store
+deploy/application/logs/*
+!deploy/application/logs/.gitignore
+/deploy/composer.phar
+/deploy/composer-setup.php
