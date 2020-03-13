@@ -64,11 +64,37 @@
  * NOTE: If you change these, also change the error_reporting() code below
  */
 
-// @NOTE for CLI requests the database password should ether be passed as the 4th argument: php [0]index.php [1]controller [2]env [3]password
-// or otherwise be loaded as a systemwide environment variable
+// @NOTE for CLI requests systemwide environment variables should be loaded for database connection details
+if (PHP_SAPI === 'cli'){
+ // example $argv array
+ // Array(
+ //   [0] => index.php
+ //   [1] => migrate
+ //   [2] => (environment)
+ // );
+
+ if(empty($argv[1]) || empty($argv[2]) ||
+   ($argv[1] != 'migrate'
+ )){
+
+   exit("Missing CLI arguments, or controller not permitted through CLI - see index.php \n");
+ } else {
+
+   define('ENVIRONMENT', $argv[2]);
+
+   if($argv[1] === 'migrate'){
+     define('MIGRATION_IN_PROGRESS', TRUE);
+   }
+ }
+
+ $_SERVER['HTTP_HOST'] = '';
+ $_SERVER['REMOTE_ADDR'] = '0.0.0.0';
+
+} else {
+  define('ENVIRONMENT', getenv('APPLICATION_ENV'));
+}
 
 
-define('ENVIRONMENT', getenv('APPLICATION_ENV'));
 
 // we are behind a proxy on prod
 // codeigniter does not do this automatically

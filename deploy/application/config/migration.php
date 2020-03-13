@@ -70,7 +70,7 @@ $config['migration_auto_latest'] = FALSE;
 |
 */
 
-$config['migration_version'] = 251;
+$config['migration_version'] = 1;
 
 
 
