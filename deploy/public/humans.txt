@@ -1,0 +1,18 @@
+# humanstxt.org/
+
+
+/* TEAM */
+  Ade Rowbotham
+  Site:  https://aderowbotham.com
+  Twitter: @_ade
+  Contact: aderowbotham [at] gmail.com
+  From: Stamford, UK
+
+
+
+/* SITE */
+  Last update: 2018/06
+  Language: English
+  Technology: PHP7.2, CodeIgniter 3
+  Doctype: JSON
+  IDE: Atom, vim
