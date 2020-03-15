@@ -3,3 +3,4 @@ deploy/application/logs/*
 !deploy/application/logs/.gitignore
 /deploy/composer.phar
 /deploy/composer-setup.php
+/deploy/vendor/*

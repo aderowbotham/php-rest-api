@@ -6,6 +6,20 @@ namespace Composer\Autoload;
 
 class ComposerStaticInit90c76a889f670e15a9a47dd40539ca40
 {
+    public static $prefixLengthsPsr4 = array (
+        'c' => 
+        array (
+            'chriskacerguis\\RestServer\\' => 26,
+        ),
+    );
+
+    public static $prefixDirsPsr4 = array (
+        'chriskacerguis\\RestServer\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/chriskacerguis/codeigniter-restserver/src',
+        ),
+    );
+
     public static $prefixesPsr0 = array (
         'C' => 
         array (
@@ -19,6 +33,8 @@ class ComposerStaticInit90c76a889f670e15a9a47dd40539ca40
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
+            $loader->prefixLengthsPsr4 = ComposerStaticInit90c76a889f670e15a9a47dd40539ca40::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInit90c76a889f670e15a9a47dd40539ca40::$prefixDirsPsr4;
             $loader->prefixesPsr0 = ComposerStaticInit90c76a889f670e15a9a47dd40539ca40::$prefixesPsr0;
 
         }, null, ClassLoader::class);
