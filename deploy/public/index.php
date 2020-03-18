@@ -103,7 +103,7 @@ if (isset($_SERVER['HTTP_X_FORWARDED_FOR'])) {
 }
 
 // globally set whether to use https
-if (isset($_SERVER['HTTPS']) && ($_SERVER['HTTPS'] == 'on' || $_SERVER['HTTPS'] == 1) || isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] == 'https') {
+if (isset($_SERVER['HTTPS']) && ($_SERVER['HTTPS'] === 'on' || $_SERVER['HTTPS'] == 1) || isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] === 'https') {
   define('GLOBAL_USE_HTTPS', TRUE);
 } else {
   define('GLOBAL_USE_HTTPS', FALSE);

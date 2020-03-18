@@ -4,7 +4,7 @@ AddType image/vnd.microsoft.icon .cur .ico
 
 RewriteEngine on
 
-# remove lading multiple forward slashes from request uri
+# remove multiple forward slashes from request uri
 RewriteCond %{THE_REQUEST} ^[A-Z]{3,7}\s//+(.*)\sHTTP.*$
 RewriteRule ^.*$ /%1 [R=301,L]
 
@@ -12,7 +12,7 @@ RewriteRule ^.*$ /%1 [R=301,L]
 RewriteCond %{REQUEST_URI} ^(.*?)(/{2,})(.*)$
 RewriteRule . %1/%3 [R=301,L]
 
-# redirect index.php to /
+# redirect 'index.php' request to /
 RewriteRule ^index.php/?$ / [R=301,L]
 
 # remove trailing slashes from request
@@ -20,7 +20,13 @@ RewriteCond %{REQUEST_FILENAME} !-l
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule ^(.*)/$ $1 [R=301,L]
 
-#default
+# allow authorization header to be read by PHP
+# NOTE this may be required in the virtual host definition:
+# SetEnvIf Authorization "(.*)" HTTP_AUTHORIZATION=$1
+RewriteCond %{HTTP:Authorization} ^(.*)
+RewriteRule .* - [e=HTTP_AUTHORIZATION:%1]
+
+# pass all non-file / directory reqeusts to index.php
 RewriteBase /
 RewriteCond $1 !^(index\.php|images)
 RewriteCond %{REQUEST_FILENAME} !-f

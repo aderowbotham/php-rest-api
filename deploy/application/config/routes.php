@@ -54,8 +54,11 @@ $route['404_override'] = 'notfound';
 $route['translate_uri_dashes'] = FALSE;
 
 // - - API 1.0 - -
-$route["1.0"]['get'] = 'apiv1/home';
-$route["1.0/status"]['get'] = 'apiv1/index';
+$route["1.0"]['get'] = 'v1/home';
+$route["1.0/status"]['get'] = 'v1/status';
+
+$route["1.0/users"]['get'] = 'v1/users';
+$route["1.0/users/id/(:num)"]['get'] = 'v1/users/index/id/$1';
+$route["1.0/users"]['post'] = 'v1/users/index/$1';
 
 $route["api/1.0/auth"] = "apiv2/auth/index";
-$route["api/1.0/orders/stats/month/(:num)/download"] = "apiv2/orderstats/monthdownload/$1";

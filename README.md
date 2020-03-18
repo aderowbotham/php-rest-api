@@ -10,10 +10,9 @@ The default API root is /1.0 - see config/routes
 Assumes that some information is set in environment variables as follows:
 
     SetEnv APPLICATION_ENV "development"
-    SetEnv CI_ENCRYPTION_KEY "some-random-encryption-key-CHANGEME"
     SetEnv DATABASE "mydatabase"
-    SetEnv DATABASE_USERNAME "my_db_user"
-    SetEnv DATABASE_PASSWORD "my_db_pass"
+    SetEnv DATABASE_USERNAME "mydatabaseuser"
+    SetEnv DATABASE_PASSWORD "mydatabasepassword"
 
 
 
@@ -27,3 +26,16 @@ e.g.
 
     cd /var/www/my_site_directory/deploy/public
     php index.php migrate testing`
+
+
+**Important note:** The environment in which the CLI command is being run will need to have the database credentials loaded.
+
+#### Setting environment vars on macOS (temporarily)
+
+If you need to use CLI mode on macOS you can temporarily set environment vars as follows:
+
+    export DATABASE="mydatabase"
+    export DATABASE_USERNAME="mydatabaseuser"
+    export DATABASE_PASSWORD="mydatabasepassword"
+
+There are many guides for installing them more permanently, such as [this one](https://medium.com/@youngstone89/setting-up-environment-variables-in-mac-os-28e5941c771c)

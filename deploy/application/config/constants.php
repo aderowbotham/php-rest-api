@@ -38,10 +38,6 @@ define('FOPEN_WRITE_CREATE_STRICT', 			'xb');
 define('FOPEN_READ_WRITE_CREATE_STRICT',		'x+b');
 
 
-/* End of file constants.php */
-/* Location: ./system/application/config/constants.php */
-
-
 // environments
 define('ENV_PRODUCTION',	'production');
 define('ENV_TESTING',		'testing');
@@ -49,10 +45,10 @@ define('ENV_DEVELOPMENT',	'development');
 
 define('USER_ROOT', 10);
 define('USER_ADMIN', 9);
+// define your own intermediate permissions levels here
 define('USER_KNOWN', 2);
-define('USER_ANON', 0);
+define('USER_PUBLIC', 0);
 
-define('ALL_PERMISSIONS_STRING', implode(",", array(USER_ROOT, USER_ADMIN, USER_KNOWN, USER_ANON)));
 define('ERROR_UNKNOWN', 'An unknown error occurred');
 
 /*
@@ -61,14 +57,9 @@ define('ERROR_UNKNOWN', 'An unknown error occurred');
 |--------------------------------------------------------------------------
 */
 
-define('CI_ENCRYPTION_KEY', getenv('CI_ENCRYPTION_KEY'));
 define('DATABASE', getenv('DATABASE'));
 define('DATABASE_USERNAME', getenv('DATABASE_USERNAME'));
 define('DATABASE_PASSWORD', getenv('DATABASE_PASSWORD'));
-
-if(empty(CI_ENCRYPTION_KEY)){
-  exit('Missing encryption key - set in environment variables');
-}
 
 if(empty(DATABASE)){
   exit('Missing database name - set in environment variables');
@@ -81,3 +72,19 @@ if(empty(DATABASE_USERNAME)){
 if(empty(DATABASE_PASSWORD)){
   exit('Missing database password - set in environment variables');
 }
+
+
+/*
+|--------------------------------------------------------------------------
+| Encryption key - uncomment if you intend to use the encryption library
+|--------------------------------------------------------------------------
+*/
+
+// define('CI_ENCRYPTION_KEY', getenv('CI_ENCRYPTION_KEY'));
+// if(empty(CI_ENCRYPTION_KEY)){
+//   exit('Missing encryption key - set in environment variables');
+// }
+
+
+/* End of file constants.php */
+/* Location: ./system/application/config/constants.php */
