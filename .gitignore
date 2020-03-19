@@ -5,5 +5,4 @@ deploy/application/logs/*
 /deploy/composer-setup.php
 
 !/deploy/vendor/
-/deploy/vendor/*
 !/deploy/vendor/chriskacerguis/*
