@@ -120,8 +120,8 @@ if (isset($_SERVER['HTTPS']) && ($_SERVER['HTTPS'] === 'on' || $_SERVER['HTTPS']
  * By default development will show errors but testing and live will hide them.
  */
 
- if (version_compare(PHP_VERSION, 'u', '<')){
-   exit("Requires PHP 7 or later");
+ if (version_compare(PHP_VERSION, '7.2', '<')){
+   exit("Requires PHP 7.2 or later");
  }
 
 
