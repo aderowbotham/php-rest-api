@@ -1,9 +1,12 @@
 ## PHP REST API
 
-Simple lightweight REST API for PHP
+Simple lightweight REST API for PHP. Built on CI3 with [chriskacerguis/codeigniter-restserver](https://github.com/chriskacerguis/codeigniter-restserver)
 
-The default API root is /1.0 - see config/routes
+**NOTE** the vendor files for the `codeigniter-restserver` library have *not* been ignored inside the vendor directory because there was a problem getting the latest versioned **release** of that to work. So it was installed specifying version **dev-master** in Composer (see [issue here](https://github.com/chriskacerguis/codeigniter-restserver/issues/1065)).
 
+Given that dev-master is not necessarily a stable version those files are included in this package.
+
+The default API root is /1.0 - see config/routes. Includes examples of GET and POST and a GET route that requires Authorization.
 
 ### Environment setup
 
