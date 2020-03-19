@@ -15,7 +15,7 @@ class Home extends Api_controller {
 
 
   public function index_get(){
-    $this->_outputSuccess('This is API v1.0. See documentation for usage.');
+    $this->success('This is API v1.0. See documentation for usage.');
   }
 
 }

@@ -6,7 +6,7 @@ class Migrate extends CI_Controller {
 
     parent::__construct();
 
-    // @NOTE super critical we don't let this run outside of dev except via the CLI
+    // @NOTE critical we don't let this run outside of development environment except via the CLI
     if(!is_cli() && ENVIRONMENT !== ENV_DEVELOPMENT){
       show_404();
     }
@@ -45,7 +45,6 @@ class Migrate extends CI_Controller {
       } else {
         $this->cache->file->clean();
       }
-
     }
 
     echo "- - - - - - - - - - - - - - - - - - - - - - -\n\n";

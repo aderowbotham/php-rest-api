@@ -57,8 +57,8 @@ $route['translate_uri_dashes'] = FALSE;
 $route["1.0"]['get'] = 'v1/home';
 $route["1.0/status"]['get'] = 'v1/status';
 
-$route["1.0/users"]['get'] = 'v1/users';
-$route["1.0/users/id/(:num)"]['get'] = 'v1/users/index/id/$1';
-$route["1.0/users"]['post'] = 'v1/users/index/$1';
+$route["1.0/products"]['get'] = 'v1/products';
+$route["1.0/products/id/(:num)"]['get'] = 'v1/products/index/id/$1';
+$route["1.0/products"]['post'] = 'v1/products/index/$1';
 
-$route["api/1.0/auth"] = "apiv2/auth/index";
+$route["1.0/private-content"] = "v1/privatecontent/index";

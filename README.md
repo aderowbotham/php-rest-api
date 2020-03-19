@@ -15,8 +15,9 @@ Assumes that some information is set in environment variables as follows:
     SetEnv DATABASE_PASSWORD "mydatabasepassword"
 
 
-
 ### Migrations
+
+Start by creating a database and then import the provided SQL file 'IMPORT FIRST.sql' to create the migrations table. Next you can run migrations as below. Included is a demo migration to create a users table which is then demonstrated in the example authenticated query `GET:/1.0/private`.
 
 In the **development** environment run migrations by going to at https://your-dev-domain.local/migrate
 

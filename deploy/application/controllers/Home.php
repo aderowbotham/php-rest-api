@@ -14,6 +14,6 @@ class Home extends Api_controller {
   }
 
   public function index_get(){
-    $this->_outputSuccess('Hello world');
+    $this->success('Hello world');
   }
 }

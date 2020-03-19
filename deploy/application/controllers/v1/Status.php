@@ -15,16 +15,11 @@ class Status extends Api_controller {
     parent::__construct();
   }
 
-
-
   public function index_get(){
-
-    $output = (object)[
+    $output = [
       'status' => 'ok'
     ];
-    $this->response($output, 200 );
+    $this->success($output);
   }
-
-
 
 }

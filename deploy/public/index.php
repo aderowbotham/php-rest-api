@@ -120,6 +120,9 @@ if (isset($_SERVER['HTTPS']) && ($_SERVER['HTTPS'] === 'on' || $_SERVER['HTTPS']
  * By default development will show errors but testing and live will hide them.
  */
 
+ if (version_compare(PHP_VERSION, 'u', '<')){
+   exit("Requires PHP 7 or later");
+ }
 
 
  switch (ENVIRONMENT)
@@ -135,10 +138,6 @@ if (isset($_SERVER['HTTPS']) && ($_SERVER['HTTPS'] === 'on' || $_SERVER['HTTPS']
    if (version_compare(PHP_VERSION, '5.3', '>='))
    {
      error_reporting(E_ALL & ~E_NOTICE & ~E_DEPRECATED & ~E_STRICT & ~E_USER_NOTICE & ~E_USER_DEPRECATED);
-   }
-   else
-   {
-     error_reporting(E_ALL & ~E_NOTICE & ~E_STRICT & ~E_USER_NOTICE);
    }
    break;
 

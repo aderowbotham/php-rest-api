@@ -7,7 +7,7 @@
  *
  */
 
-class Post extends Api_controller {
+class Privatecontent extends Api_controller {
 
   public function __construct() {
 
@@ -16,13 +16,11 @@ class Post extends Api_controller {
     parent::__construct(USER_ADMIN);
   }
 
-  // route: POST:/1.0/post-test
-  public function index(){
+  // route: GET:/1.0/private-content (auth required)
+  public function index_get(){
 
-    $input = $this->getInput();
-    $this->_outputSuccess((object)[
-      'message' => 'This method simply echoes back the JSON payload you post to it',
-      'payload' => $input
+    $this->success([
+      'message' => 'Private content ok'
     ]);
   }
 

@@ -7,5 +7,5 @@
 */
 
 $config['log_threshold'] = 1;
-$config['proxy_ips'] = '10.190.254.9';
+$config['proxy_ips'] = '';
 $config['cookie_secure'] = TRUE;

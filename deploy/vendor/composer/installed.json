@@ -1,22 +1,22 @@
 [
     {
         "name": "chriskacerguis/codeigniter-restserver",
-        "version": "3.1.1",
-        "version_normalized": "3.1.1.0",
+        "version": "dev-master",
+        "version_normalized": "9999999-dev",
         "source": {
             "type": "git",
             "url": "https://github.com/chriskacerguis/codeigniter-restserver.git",
-            "reference": "6ced70d12c7e8d207eaded3f208a201330950b57"
+            "reference": "cb24641947accfa0bf0a9208073a780f300cccfe"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/chriskacerguis/codeigniter-restserver/zipball/6ced70d12c7e8d207eaded3f208a201330950b57",
-            "reference": "6ced70d12c7e8d207eaded3f208a201330950b57",
+            "url": "https://api.github.com/repos/chriskacerguis/codeigniter-restserver/zipball/cb24641947accfa0bf0a9208073a780f300cccfe",
+            "reference": "cb24641947accfa0bf0a9208073a780f300cccfe",
             "shasum": ""
         },
-        "time": "2019-11-12T15:39:34+00:00",
+        "time": "2019-12-22T14:11:56+00:00",
         "type": "library",
-        "installation-source": "dist",
+        "installation-source": "source",
         "autoload": {
             "psr-4": {
                 "chriskacerguis\\RestServer\\": "src/"

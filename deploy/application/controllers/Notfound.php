@@ -15,7 +15,7 @@ class Notfound extends Api_controller {
 
 
   public function index(){
-    $this->_output404();
+    $this->fail404();
   }
 
 }
