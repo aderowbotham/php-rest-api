@@ -10,6 +10,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 $config['maintenance_mode'] = false;
 
+// used for creating the access_key (not the secret_key) from the username
+// its purpose is to make public keys non-guessable if knowing someone's username
+// change this to anything you like.
+$config['public_key_salt'] = '/dNW{&#xEV3[gB7qgew';
+
 
 
 /*
