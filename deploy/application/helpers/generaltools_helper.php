@@ -1,13 +1,4 @@
 <?php if (!defined('BASEPATH')) exit('No direct script access allowed');
-/**
-* Code Igniter
-*
-*
-* @package		CodeIgniter / General Processing tools
-* @author		Ade Rowbotham
-* @copyright	Copyright (c) Ade Rowbotham
-* @link		http://ade.rowbotham.co.uk
-*/
 
 
 if ( ! function_exists('toBoolean')){
@@ -17,8 +8,6 @@ if ( ! function_exists('toBoolean')){
 }
 
 
-
-
 if ( ! function_exists('removeSpaces')){
   function removeSpaces($inputString)
   {
@@ -26,15 +15,11 @@ if ( ! function_exists('removeSpaces')){
   }
 }
 
-
 if(!function_exists('precisionCeil')){
   function precisionCeil($value, $precision = 0) {
     return ceil($value * pow(10, $precision)) / pow(10, $precision);
   }
 }
-
-
-
 
 // clone array - required to clone an array of objects
 // otherwise the object pointers remain intact as references
@@ -52,9 +37,6 @@ if(!function_exists('array_clone')){
   }, $array);
 }
 }
-
-
-
 
 
 if(!function_exists('url_get_contents')){

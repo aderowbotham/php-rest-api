@@ -17,7 +17,8 @@ class Status extends Api_controller {
 
   public function index_get(){
     $output = [
-      'status' => 'ok'
+      'message' => 'Status is OK',
+      'version' => '1.0'
     ];
     $this->success($output);
   }

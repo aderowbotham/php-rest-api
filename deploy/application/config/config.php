@@ -14,6 +14,8 @@ $config['maintenance_mode'] = false;
 // its purpose is to make public keys non-guessable if knowing someone's username
 // change this to anything you like.
 $config['public_key_salt'] = '/dNW{&#xEV3[gB7qgew';
+$config['trust_cli_users'] = true;
+$config['max_failed_auth_attempts'] = 10;
 
 
 

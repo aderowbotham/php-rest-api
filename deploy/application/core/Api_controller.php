@@ -5,20 +5,18 @@ use chriskacerguis\RestServer\RestController;
 class Api_controller extends RestController {
 
   protected static $user_is_authorised;
-  protected static $minPermissions;
+  protected static $min_permissions;
   protected static $user_permissions = -1;
   private static $input_api_key = NULL;
 
 
 
-  function __construct($minPermissions = USER_PUBLIC) {
+  function __construct($min_permissions = USER_PUBLIC) {
     parent::__construct();
 
     $this->load->driver('cache', array('adapter' => 'memcached', 'backup' => 'file'));
+    $this->load->helper(['url','api_helper']);
     $this->cacheAdapter =($this->cache->memcached->is_supported())? $this->cache->memcached  : $this->cache->file;
-    $this->load->helper('url');
-
-    $this->load->helper('api_helper');
 
     if($this->config->item('maintenance_mode') === true){
       return $this->fail('Maintenance mode. Sorry for the inconvenience while we are upgrading. Try again soon', 503);
@@ -30,16 +28,11 @@ class Api_controller extends RestController {
       return $this->fail404();
     }
 
-    self::$minPermissions = $minPermissions;
-
-    $this->_processHeaders();
-
-    // $permissions_ok = $this->_checkPermissions();
-    // $this->load->helper(array('api', 'generaltools'));
-    // if(!$permissions_ok){
-    //   return false;
-    // }
-
+    self::$min_permissions = $min_permissions;
+    $permissions_ok = $this->_checkPermissions();
+    if(!$permissions_ok){
+      return false;
+    }
 
   }
 
@@ -55,7 +48,7 @@ class Api_controller extends RestController {
 
   protected function checkPermissions($newMinPermissions=-1){
     if($newMinPermissions !== -1){
-      self::$minPermissions = $newMinPermissions;
+      self::$min_permissions = $newMinPermissions;
     }
     return $this->_checkPermissions();
   }
@@ -102,83 +95,74 @@ class Api_controller extends RestController {
 
 
 
-  // - - - - private internal methods - - - -
-
   private function _checkPermissions(){
+    self::$user_is_authorised = false;
+    $failed_attempts = 0;
 
-    $minPermissions = self::$minPermissions;
+    // assumed trust of CLI users
+    if(is_cli() && $this->config->item('trust_cli_users')){
+      self::$user_is_authorised = true;
+      return true;
+    }
 
-    // exit("\$minPermissions = $minPermissions");
+    $access_key = trim($this->input->server('HTTP_ACCESS_KEY'));
+    $secret_key = trim($this->input->server('HTTP_SECRET_KEY'));
 
-    $login_status = $this->getLoginStatus();
-    self::$user_permissions = $login_status['permissions'];
-
-    if($login_status['logged_in']){
-
-      if($login_status['permissions'] < $minPermissions){
-        self::$user_is_authorised = false;
-        self::$user_permissions = 0;
-        $this->fail("You do not have permission to access this resource", 403);
-        return false;
-
-      } else {
-        self::$user_is_authorised = true;
-        self::$user_permissions = $login_status['permissions'];
-        return true;
-      }
-
+    if(empty($access_key)){
+      self::$user_permissions = USER_PUBLIC;
     } else {
 
-      // cli mode: grant USER_ADMIN permissions if called from command line
-      if(is_cli()){
+      $this->load->model('users_model');
+      $user = $this->users_model->getUserByAccessKey($access_key);
 
-        self::$user_is_authorised = true;
-        self::$user_permissions = USER_ADMIN;
-        return true;
-
-      } else {
-
-        // not logged in: public users
-        // *IF* constructor is called with $minPermissions set to USER_CUSTOMER
-        // then we allow the API controller to run
-
-        if($minPermissions == USER_CUSTOMER){
-          self::$user_is_authorised = true;
-          self::$user_permissions = USER_CUSTOMER;
-          return true;
-        } else {
-          self::$user_is_authorised = false;
-          self::$user_permissions = 0;
-          $this->fail("You do not have permission to access this resource", 403);
-          return false;
-        }
+      // user not found
+      if(empty($user)){
+        authSleep();
+        self::$user_permissions = USER_PUBLIC;
+        $this->fail('Authorization rejected - bad credentials', 401);
+        return false;
       }
 
+      if($user->failed_attempts >= $this->config->item('max_failed_auth_attempts')){
+        authSleep();
+        self::$user_permissions = USER_PUBLIC;
+        $this->fail('Authorization rejected - too many attempts', 401);
+        return false;
+      }
+
+      // missing key
+      if(empty($secret_key)){
+        $this->users_model->recordFailedAuth($user->id);
+        authSleep();
+        self::$user_permissions = USER_PUBLIC;
+        $this->fail('Authorization rejected - bad credentials', 401);
+        return false;
+      }
+
+      // bad password
+      if(!password_verify($secret_key, $user->secret_key_hash)){
+        $this->users_model->recordFailedAuth($user->id);
+        authSleep();
+        self::$user_permissions = USER_PUBLIC;
+        $this->fail('Authorization rejected - bad credentials', 401);
+        return false;
+      }
+
+      // NOTE if here the then the provided secret key was correct
+      // set the permission from the user in the database
+      self::$user_permissions = $user->permissions;
+      if((int)$user->failed_attempts !== 0){
+        $this->users_model->resetFailedAuth($user->id);
+      }
+    }
+
+    if(self::$user_permissions < self::$min_permissions){
+      $this->fail('You do not have permission to access this resource', 403);
+      return false;
+    } else {
+      self::$user_is_authorised = true;
+      return true;
     }
   }
-
-
-
-  private function _processHeaders(){
-
-    // $authh = $this->input->get_request_header('Authorization');
-    // exit("\$authh = ".$authh);
-
-    $username = $this->input->server('PHP_AUTH_USER');
-    $http_auth = $this->input->server('HTTP_AUTHENTICATION') ?: $this->input->server('HTTP_AUTHORIZATION');
-
-    // exit("\$http_auth = $http_auth");
-
-    // $headers = getallheaders();
-    //$headers = apache_request_headers();
-    //exit(print_r($headers, true));
-
-    //$session_key = $this->input->get_request_header('Authorization', true);
-    // $clientVersion = $this->input->get_request_header('X-requested-with', true);
-
-    // exit("\$session_key = $session_key");
-
-  }
-
 
 }

@@ -75,11 +75,13 @@ class Migration_Create_users_table extends CI_Migration {
 
 		$this->dbforge->create_table('api_users');
 
+    $this->load->helper('api_helper');
+
     // insert demo user
     $demo_user = [
       'username' => self::$demo_username,
-      'access_key' => hash('sha256', self::$demo_username . $this->config->item('public_key_salt')),
-      'secret_key_hash' => password_hash(self::$demo_secret_key, PASSWORD_BCRYPT),
+      'access_key' => make_access_key(self::$demo_username, $this->config->item('public_key_salt')),
+      'secret_key_hash' => make_secret_key_hash(self::$demo_secret_key),
       'permissions' => USER_ADMIN,
       'created_at' => date('Y-m-d H:i:s'),
       'updated_at' => date('Y-m-d H:i:s')

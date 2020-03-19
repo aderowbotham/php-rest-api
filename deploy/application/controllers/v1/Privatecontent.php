@@ -19,8 +19,12 @@ class Privatecontent extends Api_controller {
   // route: GET:/1.0/private-content (auth required)
   public function index_get(){
 
+    if(!$this->checkPermissions()){
+      return false;
+    }
+
     $this->success([
-      'message' => 'Private content ok'
+      'message' => 'Access to private content granted'
     ]);
   }
 
