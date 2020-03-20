@@ -20,7 +20,7 @@ class Products extends Api_controller {
 
     $products = [
       ['id' => 0, 'title' => 'Bucket', 'price' => '1.99'],
-      ['id' => 1, 'tite' => 'Spade', 'price' => '0.99'],
+      ['id' => 1, 'title' => 'Spade', 'price' => '0.99']
     ];
 
     $id = $this->get('id');
