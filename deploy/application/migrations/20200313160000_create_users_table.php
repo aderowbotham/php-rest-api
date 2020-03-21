@@ -16,13 +16,13 @@ class Migration_Create_users_table extends CI_Migration {
   private static $demo_username = 'test@example.com';
   private static $demo_secret_key = 'DEMO_ONLY_CHANGE_ME_5678@';
 
-	public function up()
-	{
+  public function up()
+  {
 
     echo "Running <b>Migration_Create_users_table</b> \n";
 
     $this->dbforge->add_field('id');
-		$this->dbforge->add_field([
+    $this->dbforge->add_field([
       'username' => [
         'type' => 'VARCHAR',
         'constraint' => 100,
@@ -70,10 +70,13 @@ class Migration_Create_users_table extends CI_Migration {
         'type' => 'datetime',
         'null' => false
       ],
-		]);
+    ]);
 
 
-		$this->dbforge->create_table('api_users');
+    $this->dbforge->add_key('access_key', TRUE);
+    $this->dbforge->create_table('api_users');
+
+    $this->db->query("ALTER TABLE `api_users` ADD UNIQUE INDEX `username` (`username`);");
 
     $this->load->helper('api_helper');
 
@@ -89,12 +92,12 @@ class Migration_Create_users_table extends CI_Migration {
 
     $this->db->insert('api_users', $demo_user);
     echo "Demo user created\n";
-	}
+  }
 
-	public function down()
-	{
+  public function down()
+  {
 
     echo "Reversing <b>Migration_Create_users_table</b> \n";
-		$this->dbforge->drop_table('api_users');
-	}
+    $this->dbforge->drop_table('api_users');
+  }
 }

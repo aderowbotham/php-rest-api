@@ -73,10 +73,7 @@ if (PHP_SAPI === 'cli'){
  //   [2] => (environment)
  // );
 
- if(empty($argv[1]) || empty($argv[2]) ||
-   ($argv[1] != 'migrate'
- )){
-
+ if(empty($argv[1]) || empty($argv[2]) || ( $argv[1] !== 'migrate' && $argv[1] !== 'mkadminuser')){
    exit("Missing CLI arguments, or controller not permitted through CLI - see index.php \n");
  } else {
 
@@ -84,6 +81,16 @@ if (PHP_SAPI === 'cli'){
 
    if($argv[1] === 'migrate'){
      define('MIGRATION_IN_PROGRESS', TRUE);
+   }
+
+   if($argv[1] === 'mkadminuser'){
+     if(!empty($argv[3])){
+       define('NEW_USERNAME', $argv[3]);
+     }
+
+     if(!empty($argv[4])){
+       define('NEW_PASSWORD', $argv[4]);
+     }
    }
  }
 

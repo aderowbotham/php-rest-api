@@ -45,6 +45,14 @@ If you need to use CLI mode on macOS you can temporarily set environment vars as
 There are many guides for installing them more permanently, such as [this one](https://medium.com/@youngstone89/setting-up-environment-variables-in-mac-os-28e5941c771c)
 
 
+### Creating admin users
+
+You can create an admin user using the command line interface (CLI). Pass the username and new password. You could then give this user the ability to create more users via your own mechanism.
+
+    php index.php mkadminuser development test@example.com ADMIN_USER_SECRET_KEY
+
+
+
 ### Test routes + Controllers
 
 There are a number of routes set up to test with. They are as follows:
