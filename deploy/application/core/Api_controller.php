@@ -39,11 +39,13 @@ class Api_controller extends RestController {
 
 
   protected function getInput(){
-    if(!$input = json_decode(file_get_contents('php://input'))){
+    $input = json_decode(file_get_contents('php://input'));
+    if($input === NULL){
       return $this->fail('Missing or invalid JSON payload', 400);
     }
     return $input;
   }
+
 
 
   protected function checkPermissions($newMinPermissions=-1){
