@@ -1,4 +1,5 @@
 <?php
+defined('BASEPATH') OR exit('No direct script access allowed');
 
 use chriskacerguis\RestServer\RestController;
 
@@ -8,7 +9,6 @@ class Api_controller extends RestController {
   protected static $min_permissions;
   protected static $user_permissions = -1;
   private static $input_api_key = NULL;
-
 
 
   function __construct($min_permissions = USER_PUBLIC) {
@@ -33,19 +33,17 @@ class Api_controller extends RestController {
     if(!$permissions_ok){
       return false;
     }
-
   }
 
 
 
   protected function getInput(){
-    $input = json_decode(file_get_contents('php://input'));
+    $input = json_decode(trim($this->input->raw_input_stream));
     if($input === NULL){
       return $this->fail('Missing or invalid JSON payload', 400);
     }
     return $input;
   }
-
 
 
   protected function checkPermissions($newMinPermissions=-1){
@@ -95,6 +93,12 @@ class Api_controller extends RestController {
     return $this->fail($message, 404);
   }
 
+
+  protected function redirect(string $new_location, int $method = NULL)
+  {
+    $method = empty($method) ? 301 : $method;
+    return redirect($new_location, $method);
+  }
 
 
   private function _checkPermissions(){
