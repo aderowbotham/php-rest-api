@@ -32,3 +32,49 @@ if ( ! function_exists('make_secret_key_hash')){
     return password_hash($secret_key, PASSWORD_BCRYPT);
   }
 }
+
+
+if ( ! function_exists('validateObject')){
+  function validateObject($input_obj, $required_properties = [], $permitted_properties = [], $numeric_properties = []){
+
+    if(!is_object($input_obj)){
+      return ['Object expected'];
+    }
+
+    $errors = [];
+
+    // check required properties
+    foreach($required_properties as $property){
+      if(!property_exists($input_obj, $property)){
+        $errors[] = 'Missing property ' . $property;
+      }
+    }
+
+    // check permitted properties (or skip if no array or empty array passed)
+    if(!empty($permitted_properties)){
+      foreach($input_obj as $key => $value){
+        if(!in_array($key, $permitted_properties)){
+          $errors[] = 'Unexpected property ' . $key;
+        }
+      }
+    }
+
+    foreach($numeric_properties as $property){
+      if(property_exists($input_obj, $property)){
+        if((int)$input_obj->$property === 0){
+          continue;
+        }
+
+        if(!empty($input_obj->$property) && !is_numeric($input_obj->$property)){
+          $errors[] = 'Property must be numeric ' . $property;
+        }
+      }
+    }
+
+    if(!empty($errors)){
+      return $errors;
+    }
+
+    return TRUE;
+  }
+}
